@@ -7,8 +7,7 @@ export class CoreImpl implements CoreHandler {
 
     private commandsModel: CommandsModel;
     private varModel: VariableModel;
-
-    private memory: any = {}; // pasar a base de datos
+    private client;
 
     constructor() {
         this.commandsModel = CommandsModel.getInstance();
@@ -16,6 +15,7 @@ export class CoreImpl implements CoreHandler {
     }
 
     public attachEvents(client) {
+        this.client = client;
         client.addListener("message", (from, to, text, message) => {
             if (botConfig.botName === to) { // pm
                 this.getResponseFromMessage(from, 'PRIVMSG', text).then(responses => {
@@ -26,7 +26,11 @@ export class CoreImpl implements CoreHandler {
                 });
             } else { // channel
                 if (text.indexOf(botConfig.botName) >= 0) { // mention
-                    client.say(to, this.getResponseFromMessage(from, to, text.replace(botConfig.botName, '')));
+                    this.getResponseFromMessage(from, to, text.replace(botConfig.botName, '')).then(responses => {
+                        responses.forEach(response => {
+                            client.say(to, response);
+                        })
+                    })
                 }
             }
             console.log(from + '=>' + to + ':' + text);
@@ -87,6 +91,10 @@ export class CoreImpl implements CoreHandler {
             %{nick} = nick del bot
             %{owners} = lista de owners
             %{context} = contexto de guardado para variables
+            >>join$1 = unirse a $1 del mensaje :: unite a (#[a-zA-Z0-9_]+)
+            >>part$1
+            >>kick$1
+            >>ban$1
         */
         const rx = new RegExp(command, "gi");
         const res = rx.exec(input)
@@ -126,6 +134,27 @@ export class CoreImpl implements CoreHandler {
                     response = response.replace(r, envData[enVar[1]]);
                 })
             }
+            const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
+            if(command) {
+                if(envData.owners.indexOf(envData.user) > 0) {
+                    response = response.replace(command[0], '').trim();
+                    if(command[1] === 'join') {
+                        this.client.join(res[command[2]]);
+                    }
+                    if(command[1] === 'part') {
+                        this.client.part(res[command[2]]);
+                    }
+                    if(command[1] === 'kick') {
+                        
+                    }
+                    if(command[1] === 'ban') {
+                        
+                    }
+                } else {
+                    return 'Tu a mi no me mandas. :fu:';
+                }
+            }
+
             return response;
         }
         return;

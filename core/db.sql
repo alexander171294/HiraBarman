@@ -43,3 +43,18 @@ VALUES
   '\!help comando$',
   '["Ayuda de comando"]'
 );
+
+INSERT INTO commands
+(
+  targetChannel,
+  fromUser,
+  command,
+  response
+)
+VALUES
+(
+  NULL,
+  NULL,
+  'una pinta',
+  '["%{user} ya va tomando @{cerveza++}! :O","Vamos un total de #{cerveza++} cervezas vendidas!"]'
+)

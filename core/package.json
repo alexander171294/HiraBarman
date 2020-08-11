@@ -14,7 +14,8 @@
   "dependencies": {
     "@types/express": "^4.17.7",
     "express": "^4.17.1",
-    "irc": "^0.5.2"
+    "irc": "^0.5.2",
+    "pg": "^8.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

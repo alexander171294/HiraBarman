@@ -5,6 +5,7 @@ import { CoreHandler } from './core/Core';
 import { ServiceRouter } from './services/ServiceRouter';
 import { ServiceRouterImpl } from './services/ServiceRouterImpl';
 import { botConfig } from './env/botConfig';
+import { DBHandler } from './database/DbHandler';
 
 export class App {
     private express;
@@ -30,6 +31,7 @@ export class App {
         this.services.forEach(service => {
             service.defineRoutes(this.router);
         });
+        DBHandler.connectDB();
     }
 
     listen(port) {

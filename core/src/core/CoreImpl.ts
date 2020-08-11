@@ -1,15 +1,18 @@
 import { CoreHandler } from "./Core";
 import { botConfig } from "../env/botConfig";
 import { CommandsModel, FiltersOpt } from "../database/CommandsModel";
+import { VariableModel } from "../database/VariableModel";
 
 export class CoreImpl implements CoreHandler {
 
     private commandsModel: CommandsModel;
+    private varModel: VariableModel;
 
     private memory: any = {}; // pasar a base de datos
 
     constructor() {
         this.commandsModel = CommandsModel.getInstance();
+        this.varModel = VariableModel.getInstance();
     }
 
     public attachEvents(client) {
@@ -37,7 +40,7 @@ export class CoreImpl implements CoreHandler {
         let out = [];
         const data = await this.commandsModel.getCommands(filters);
         data.forEach(cmd => {
-            const context = targetChannel === 'PIRVMSG' ? fromUser : targetChannel;
+            const context = targetChannel === 'PIRVMSG' ? 'all' : targetChannel;
             let multiResp;
             try {
                 multiResp = JSON.parse(cmd.response);
@@ -100,22 +103,20 @@ export class CoreImpl implements CoreHandler {
             if (vars) {
                 vars.forEach(vr => {
                     const variable = /(\#|\@){([a-zA-Z0-9_]+)((\+\+)?|(\-\-)?)}/.exec(vr);
-                    const siContext = variable[1] == '#';
+                    const channelVar = variable[1] == '#';
                     const vname = variable[2];
                     const modificador = variable[3];
+                    const varChannel = envData.context;
+                    const varUser = channelVar ? 'all' : envData.user;
+                    let varVal;
                     if(modificador === '++') {
-                        if(!this.memory[vname]) {
-                            this.memory[vname] = 0;
-                        }
-                        this.memory[vname] = parseInt(this.memory[vname], 10)+1;
+                        varVal = this.varModel.incrementVariable(varChannel, varUser, vname);
+                    } else if(modificador === '--') {
+                        varVal = this.varModel.decrementVariable(varChannel, varUser, vname);
+                    } else {
+                        varVal = this.varModel.findVariable(varChannel, varUser, vname);
                     }
-                    if(modificador === '--') {
-                        if(!this.memory[vname]) {
-                            this.memory[vname] = 0;
-                        }
-                        this.memory[vname] = parseInt(this.memory[vname], 10)-1;
-                    }
-                    response = response.replace(vr, this.memory[vname]);
+                    response = response.replace(vr, varVal);
                 });
             }
             const envs = response.match(/\%{([a-zA-Z0-9_]+)}/g);

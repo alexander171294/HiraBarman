@@ -6,6 +6,14 @@ CREATE TABLE commands(
    response TEXT
 );
 
+CREATE TABLE variables(
+   id SERIAL PRIMARY KEY NOT NULL,
+   channel VARCHAR(250) NULL,
+   userName VARCHAR(250) NULL,
+   varName VARCHAR(250) NULL,
+   rawValue VARCHAR(250) NULL
+);
+
 INSERT INTO commands
 (
   targetchannel,

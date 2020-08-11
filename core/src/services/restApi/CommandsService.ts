@@ -11,7 +11,7 @@ export class CommandService implements BaseService {
     }
 
     get(req: express.Request, resp: express.Response) {
-        resp.send('Hello World');
+        resp.send(this.commandsModel.getCommands({}));
     }
 
     getOne(req: express.Request, resp: express.Response) {
@@ -25,7 +25,7 @@ export class CommandService implements BaseService {
     put(req: express.Request, resp: express.Response) {
         resp.send('Hello World');
     }
-    
+
     delete(req: express.Request, resp: express.Response) {
         resp.send('Hello World');
     }

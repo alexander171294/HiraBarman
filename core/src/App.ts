@@ -27,9 +27,8 @@ export class App {
         this.cores.forEach(core => {
             core.attachEvents(this.client);
         });
-        this.router = express.Router();
         this.services.forEach(service => {
-            service.defineRoutes(this.router);
+            service.defineRoutes(this.express);
         });
         DBHandler.connectDB();
     }

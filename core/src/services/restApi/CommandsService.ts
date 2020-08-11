@@ -11,7 +11,9 @@ export class CommandService implements BaseService {
     }
 
     get(req: express.Request, resp: express.Response) {
-        resp.send(this.commandsModel.getCommands({}));
+        this.commandsModel.getCommands({}).then(r => {
+            resp.send(r);
+        })
     }
 
     getOne(req: express.Request, resp: express.Response) {

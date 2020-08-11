@@ -21,6 +21,7 @@ export class App {
 
     constructor() {
         this.express = express();
+        DBHandler.connectDB();
         this.client = new irc.Client(botConfig.server, botConfig.botName, {
             channels: botConfig.channels
         });
@@ -30,7 +31,6 @@ export class App {
         this.services.forEach(service => {
             service.defineRoutes(this.express);
         });
-        DBHandler.connectDB();
     }
 
     listen(port) {

@@ -24,8 +24,25 @@ export class CommandsModel extends BaseModel {
     }
     
     public async getCommands(filters: FiltersOpt): Promise<Command[]> {
-        const res = await this.db.query('SELECT command, response FROM commands WHERE (targetChannel = null OR targetChannel = $1) AND (fromUser = null OR fromUser = $2)',
-                      [filters.targetChannel, filters.fromUser]).catch(
+        let target = '';
+        let params = [];
+        if (filters.targetChannel) {
+            target = '(targetChannel = null' + target + 'OR targetChannel = $1)';
+            params.push(filters.targetChannel);
+        }
+        if(filters.fromUser) {
+            if (target != '') {
+                target += ' AND ';
+            }
+            const variable = target != '' ? '$2' : '$1';
+            target += '(fromUser = null OR fromUser = ' + variable + ')';
+            params.push(filters.fromUser);
+        }
+        if(target != '') {
+            target = ' WHERE ' + target;
+        }
+        // console.log('Searching target ', target, params);
+        const res = await this.db.query('SELECT * FROM commands' + target, params).catch(
                         (err) => {
                             console.error('Error querying commands: ', filters, err);
                         }

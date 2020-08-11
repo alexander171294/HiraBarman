@@ -1,5 +1,9 @@
 export const botConfig = {
 	"channels": ["#harkolandia"],
 	"server": "irc.hira.li",
-	"botName": "ElBarman"
+	"botName": "ElBarman",
+	"owners": [
+		'harkonidaz',
+		'harkito'
+	]
 };

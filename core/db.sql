@@ -5,3 +5,33 @@ CREATE TABLE commands(
    command VARCHAR(250) NULL,
    response TEXT
 );
+
+INSERT INTO commands
+(
+  targetchannel,
+  fromuser,
+  command,
+  response
+)
+VALUES
+(
+  NULL,
+  NULL,
+  '\!help$',
+  '["Ayuda general"]'
+);
+
+INSERT INTO commands
+(
+  targetchannel,
+  fromuser,
+  command,
+  response
+)
+VALUES
+(
+  NULL,
+  NULL,
+  '\!help comando$',
+  '["Ayuda de comando"]'
+);

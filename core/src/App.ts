@@ -12,16 +12,18 @@ export class App {
     private client;
     private router: express.Router;
 
-    private services: ServiceRouter[] = [
-        new ServiceRouterImpl()
-    ];
-    private cores: CoreHandler[] = [
-        new CoreImpl()
-    ];
+    private services: ServiceRouter[];
+    private cores: CoreHandler[];
 
     constructor() {
         this.express = express();
         DBHandler.connectDB();
+        this.services = [
+            new ServiceRouterImpl()
+        ];
+        this.cores = [
+            new CoreImpl()
+        ];
         this.client = new irc.Client(botConfig.server, botConfig.botName, {
             channels: botConfig.channels
         });

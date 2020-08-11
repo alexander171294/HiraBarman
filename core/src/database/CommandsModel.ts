@@ -27,7 +27,7 @@ export class CommandsModel extends BaseModel {
         let target = '';
         let params = [];
         if (filters.targetChannel) {
-            target = '(targetChannel = null' + target + 'OR targetChannel = $1)';
+            target = '(targetChannel is null' + target + ' OR targetChannel = $1)';
             params.push(filters.targetChannel);
         }
         if(filters.fromUser) {
@@ -35,19 +35,20 @@ export class CommandsModel extends BaseModel {
                 target += ' AND ';
             }
             const variable = target != '' ? '$2' : '$1';
-            target += '(fromUser = null OR fromUser = ' + variable + ')';
+            target += '(fromUser is null OR fromUser = ' + variable + ')';
             params.push(filters.fromUser);
         }
         if(target != '') {
             target = ' WHERE ' + target;
         }
         // console.log('Searching target ', target, params);
-        const res = await this.db.query('SELECT * FROM commands' + target, params).catch(
+        const query = 'SELECT * FROM commands' + target;
+        const res = await this.db.query(query, params).catch(
                         (err) => {
-                            console.error('Error querying commands: ', filters, err);
+                            console.error('Error querying commands: ', query, filters, err);
                         }
                       );
-        return res.rows;
+        return res ? res.rows : [];
     }
 
     public async findCommand(id_command: number): Promise<Command[]> {
@@ -57,7 +58,7 @@ export class CommandsModel extends BaseModel {
                             console.error('Error querying commands: ', id_command, err);
                         }
                       );
-        return res.rows;
+        return res ? res.rows : [];
     }
 
     public async addComand(command: Command) {

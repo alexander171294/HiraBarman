@@ -39,15 +39,15 @@ export class CoreImpl implements CoreHandler {
         filters.targetChannel = targetChannel;
         let out = [];
         const data = await this.commandsModel.getCommands(filters);
-        data.forEach(cmd => {
+        for(const cmd of data) {
             const context = targetChannel === 'PIRVMSG' ? 'all' : targetChannel;
             let multiResp;
             try {
                 multiResp = JSON.parse(cmd.response);
             } catch(e) {}
             if(multiResp) {
-                multiResp.forEach(response => {
-                    const r = this.processMessage(cmd.command, response, text, {
+                for(const response of multiResp) {
+                    const r = await this.processMessage(cmd.command, response, text, {
                         context,
                         user: fromUser,
                         channel: targetChannel,
@@ -57,9 +57,9 @@ export class CoreImpl implements CoreHandler {
                     if(r) {
                         out.push(r);
                     }
-                });
+                }
             } else {
-                const r = this.processMessage(cmd.command, cmd.response, text, {
+                const r = await this.processMessage(cmd.command, cmd.response, text, {
                     context,
                     user: fromUser,
                     channel: targetChannel,
@@ -70,14 +70,14 @@ export class CoreImpl implements CoreHandler {
                     out.push(r);
                 }
             }
-        });
+        }
         if(out.length == 0) {
             out.push('Ups no te entiendo, ejecuta el comando !help para ver una ayuda o !help comando para ver ayuda sobre un comando específico');
         }
         return out;
     }
 
-    private processMessage(command: string, response: string, input: string, envData: EnvData) {
+    private async processMessage(command: string, response: string, input: string, envData: EnvData) {
         /* 
             @{algo} = variable por usuario 
             #{algo} = variable por canal 
@@ -101,7 +101,7 @@ export class CoreImpl implements CoreHandler {
             }
             const vars = response.match(/(\#|\@){([a-zA-Z0-9_]+)((\+\+)?|(\-\-)?)}/g);
             if (vars) {
-                vars.forEach(vr => {
+                for(const vr of vars) {
                     const variable = /(\#|\@){([a-zA-Z0-9_]+)((\+\+)?|(\-\-)?)}/.exec(vr);
                     const channelVar = variable[1] == '#';
                     const vname = variable[2];
@@ -110,14 +110,14 @@ export class CoreImpl implements CoreHandler {
                     const varUser = channelVar ? 'all' : envData.user;
                     let varVal;
                     if(modificador === '++') {
-                        varVal = this.varModel.incrementVariable(varChannel, varUser, vname);
+                        varVal = await this.varModel.incrementVariable(varChannel, varUser, vname);
                     } else if(modificador === '--') {
-                        varVal = this.varModel.decrementVariable(varChannel, varUser, vname);
+                        varVal = await this.varModel.decrementVariable(varChannel, varUser, vname);
                     } else {
-                        varVal = this.varModel.findVariable(varChannel, varUser, vname);
+                        varVal = await this.varModel.findVariable(varChannel, varUser, vname);
                     }
                     response = response.replace(vr, varVal);
-                });
+                }
             }
             const envs = response.match(/\%{([a-zA-Z0-9_]+)}/g);
             if(envs) {
@@ -130,6 +130,7 @@ export class CoreImpl implements CoreHandler {
         }
         return;
     }
+
 }
 
 export interface EnvData {

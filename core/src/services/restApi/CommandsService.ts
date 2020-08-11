@@ -1,7 +1,15 @@
 import { BaseService } from "../BaseService";
+import { CommandsModel } from "../../database/CommandsModel";
 import * as express from 'express';
 
-export class HelloWorldService implements BaseService {
+export class CommandService implements BaseService {
+
+    private commandsModel: CommandsModel;
+
+    constructor() {
+        this.commandsModel = CommandsModel.getInstance();
+    }
+
     get(req: express.Request, resp: express.Response) {
         resp.send('Hello World');
     }
@@ -14,4 +22,5 @@ export class HelloWorldService implements BaseService {
     delete(req: express.Request, resp: express.Response) {
         resp.send('Hello World');
     }
+
 }

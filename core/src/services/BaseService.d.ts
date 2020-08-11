@@ -1,6 +1,8 @@
+import * as express from 'express';
+
 export interface BaseService {
-    get(req: Express.Request, resp: Express.Response);
-    post(req: Express.Request, resp: Express.Response);
-    put(req: Express.Request, resp: Express.Response);
-    delete(req: Express.Request, resp: Express.Response);
+    get(req: express.Request, resp: express.Response);
+    post(req: express.Request, resp: express.Response);
+    put(req: express.Request, resp: express.Response);
+    delete(req: express.Request, resp: express.Response);
 }

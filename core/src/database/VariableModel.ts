@@ -42,7 +42,7 @@ export class VariableModel extends BaseModel {
 
     async findVariableAsNumber(channel: string, userName: string, varName: string): Promise<number> {
         let resRaw = await this.findVariable(channel, userName, varName);
-        if(resRaw = '') {
+        if(resRaw === '') {
             resRaw = '0';
         }
         return parseInt(resRaw, 10);

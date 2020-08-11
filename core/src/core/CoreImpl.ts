@@ -99,7 +99,27 @@ export class CoreImpl implements CoreHandler {
         const rx = new RegExp(command, "gi");
         const res = rx.exec(input)
         if (res) {
-            console.log('Match regex: ', res);
+            const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
+            console.log(response);
+            if(command) {
+                if(envData.owners.indexOf(envData.user.toLowerCase()) > 0) {
+                    response = response.replace(command[0], '').trim();
+                    if(command[1] === 'join') {
+                        this.client.join(res[command[2]]);
+                    }
+                    if(command[1] === 'part') {
+                        this.client.part(res[command[2]]);
+                    }
+                    if(command[1] === 'kick') {
+                        
+                    }
+                    if(command[1] === 'ban') {
+                        
+                    }
+                } else {
+                    return 'Tu a mi no me mandas. :fu:';
+                }
+            }
             const groups = response.match(/\$[0-9]+/g);
             if (groups) {
                 groups.forEach(p => {
@@ -134,27 +154,6 @@ export class CoreImpl implements CoreHandler {
                     response = response.replace(r, envData[enVar[1]]);
                 })
             }
-            const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
-            if(command) {
-                if(envData.owners.indexOf(envData.user) > 0) {
-                    response = response.replace(command[0], '').trim();
-                    if(command[1] === 'join') {
-                        this.client.join(res[command[2]]);
-                    }
-                    if(command[1] === 'part') {
-                        this.client.part(res[command[2]]);
-                    }
-                    if(command[1] === 'kick') {
-                        
-                    }
-                    if(command[1] === 'ban') {
-                        
-                    }
-                } else {
-                    return 'Tu a mi no me mandas. :fu:';
-                }
-            }
-
             return response;
         }
         return;

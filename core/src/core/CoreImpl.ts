@@ -19,17 +19,21 @@ export class CoreImpl implements CoreHandler {
         client.addListener("message", (from, to, text, message) => {
             if (botConfig.botName === to) { // pm
                 this.getResponseFromMessage(from, 'PRIVMSG', text).then(responses => {
-                    responses.forEach(response => {
-                        console.log('OUT: ', response, from);
-                        client.say(from, response);
-                    });
+                    if(responses) {
+                        responses.forEach(response => {
+                            console.log('OUT: ', response, from);
+                            client.say(from, response);
+                        });
+                    }
                 });
             } else { // channel
                 if (text.indexOf(botConfig.botName) >= 0) { // mention
                     this.getResponseFromMessage(from, to, text.replace(botConfig.botName, '')).then(responses => {
-                        responses.forEach(response => {
-                            client.say(to, response);
-                        })
+                        if(responses) {
+                            responses.forEach(response => {
+                                client.say(to, response);
+                            })
+                        }
                     })
                 }
             }
@@ -76,9 +80,11 @@ export class CoreImpl implements CoreHandler {
             }
         }
         if(out.length == 0) {
-            out.push('Ups no te entiendo, ejecuta el comando !help para ver una ayuda o !help comando para ver ayuda sobre un comando específico');
+            this.client.say(fromUser, 'no te entiendo bro, si queres ayuda escribí !ayuda');
+            return;
+        } else {
+            return out;
         }
-        return out;
     }
 
     private async processMessage(command: string, response: string, input: string, envData: EnvData) {

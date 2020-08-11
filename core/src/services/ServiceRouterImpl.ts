@@ -3,6 +3,7 @@ import { Router } from "express";
 import { HelloWorldService } from "./restApi/HelloWorldService";
 import { BaseService } from "./BaseService";
 import { CommandService } from "./restApi/CommandsService";
+import { ChatService } from "./restApi/ChatService";
 
 export class ServiceRouterImpl implements ServiceRouter {
 
@@ -12,6 +13,7 @@ export class ServiceRouterImpl implements ServiceRouter {
         this.router = router;
         this.addRequestFor('/helloWorld', new HelloWorldService());
         this.addRequestFor('/commands', new CommandService());
+        this.addRequestFor('/chat', new ChatService());
         this.router.all('/', (req, res) => {
             console.log('REQRES', req,res);
             res.send('OK');

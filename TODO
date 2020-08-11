@@ -1,0 +1,6 @@
+logs
+Cuando hay multiples comandos con distintos target, tomar el mas específico (por ejemplo si hay uno abierto y uno para responderle a x usuario)
+Cuando hay multiples resultados por distintos matches con db randomizar.
+Crear variable randomizada de nicks.
+bienvenidas por canal
+Agregar boolean para responder al privado

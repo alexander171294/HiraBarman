@@ -33,6 +33,16 @@ export class CommandsModel extends BaseModel {
         return res.rows;
     }
 
+    public async findCommand(id_command: number): Promise<Command[]> {
+        const res = await this.db.query('SELECT command, response, targetChannel, fromUser FROM commands WHERE id_command = $1',
+                      [id_command]).catch(
+                        (err) => {
+                            console.error('Error querying commands: ', id_command, err);
+                        }
+                      );
+        return res.rows;
+    }
+
     public async addComand(command: Command) {
         return await this.db.query('INSERT INTO commands(targetChannel, fromUser, command, response) VALUES($1, $2, $3, $4)', [
             command.response,

@@ -1,8 +1,8 @@
 export const environment = {
     defaultPort: 9000,
-    pgUser: process.env.USER,
-    pgHost: 'dbhost',
+    pgUser: 'dbusr', // process.env.USER
+    pgHost: 'localhost',
     pgPassword: 'dbpass',
-    pgDb: process.env.USER,
+    pgDb: 'dbname', // process.env.USER
     pgPort: 5432
 };

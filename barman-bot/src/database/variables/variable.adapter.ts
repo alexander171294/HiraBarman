@@ -24,7 +24,8 @@ export class VariableAdapter {
             vars.channel = channel;
             vars.username = username;
             vars.varname = varname;
-            this.variableRepository.create(vars);
+            this.variableRepository.insert(vars);
+            return '';
         }
         return out[0].rawvalue;
     }
@@ -63,5 +64,27 @@ export class VariableAdapter {
                 console.error('Error updating variable: ', varname, channel, username, err);
             }
         );
+    }
+
+    public getRepository(): Repository<Variable> {
+        return this.variableRepository;
+    }
+
+    async getUsersOfVariables() {
+        const dbresp = await this.variableRepository.createQueryBuilder("commands").distinctOn(['username']).getMany();
+        const out = [];
+        dbresp.forEach(command => {
+            out.push(command.username);
+        })
+        return out;
+    }
+
+    async getChannelsOfVariables() {
+        const dbresp = await this.variableRepository.createQueryBuilder("commands").distinctOn(['channel']).getMany();
+        const out = [];
+        dbresp.forEach(command => {
+            out.push(command.channel);
+        })
+        return out;
     }
 }

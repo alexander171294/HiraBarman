@@ -37,6 +37,19 @@ export class CommandsAdapter {
         }
         return out;
     }
+
+    async getChannelsOfCommands() {
+        const dbresp = await this.commandsRepository.createQueryBuilder("commands").distinctOn(['targetchannel']).getMany();
+        const out = [];
+        dbresp.forEach(command => {
+            out.push(command.targetchannel);
+        })
+        return out;
+    }
+
+    public getRepository(): Repository<Commands> {
+        return this.commandsRepository;
+    }
 }
 
 export class FiltersOpt {

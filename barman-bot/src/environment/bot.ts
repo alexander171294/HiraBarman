@@ -1,7 +1,8 @@
 export const botCFG = {
 	// "channels": ["#harkolandia", "#caballeros"],
 	"channels": [
-		// "#harkolandia"
+		"#harkolandia",
+		"#caballeros"
 	],
 	"server": "irc.hira.li",
 	"botName": "ElBarman",

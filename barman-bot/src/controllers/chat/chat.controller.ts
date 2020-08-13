@@ -1,11 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { CoreService } from 'src/core/core.service';
-
-
-export class MessageDTO {
-    public channel: string;
-    public message: string;
-}
+import { MessageDTO } from './MessageDTO';
 
 @Controller('chat')
 export class ChatController {

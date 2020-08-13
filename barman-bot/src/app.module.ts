@@ -7,6 +7,7 @@ import { CommandsModule } from './database/commands/commands.module';
 import { Variable } from './database/variables/variable.entity';
 import { VariablesModule } from './database/variables/commands.module';
 import { ChatController } from './controllers/chat/chat.controller';
+import { CommandsController } from './controllers/commands/commands.controller';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { ChatController } from './controllers/chat/chat.controller';
     VariablesModule
   ],
   controllers: [
-    ChatController
+    ChatController,
+    CommandsController
   ],
   providers: [
     CoreService

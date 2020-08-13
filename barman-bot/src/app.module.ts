@@ -1,10 +1,36 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { databaseCFG } from './environment/database';
+import { CoreService } from './core/core.service';
+import { Commands } from './database/commands/commands.entity';
+import { CommandsModule } from './database/commands/commands.module';
+import { Variable } from './database/variables/variable.entity';
+import { VariablesModule } from './database/variables/commands.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: databaseCFG.host,
+      port: databaseCFG.port,
+      username: databaseCFG.user,
+      password: databaseCFG.password,
+      database: databaseCFG.name,
+      entities: [
+        Commands,
+        Variable
+      ],
+      // synchronize: true,
+      autoLoadEntities: true,
+    }),
+    CommandsModule,
+    VariablesModule
+  ],
+  controllers: [
+    
+  ],
+  providers: [
+    CoreService
+  ],
 })
 export class AppModule {}

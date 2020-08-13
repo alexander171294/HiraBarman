@@ -170,6 +170,9 @@ export class CoreService {
         return;
     }
 
+    public send(chnl: string, str: string) {
+        this.client.say(chnl, str);
+    }
 
 }
 

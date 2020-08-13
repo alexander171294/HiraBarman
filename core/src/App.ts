@@ -6,6 +6,7 @@ import { ServiceRouter } from './services/ServiceRouter';
 import { ServiceRouterImpl } from './services/ServiceRouterImpl';
 import { botConfig } from './env/botConfig';
 import { DBHandler } from './database/DbHandler';
+var bodyParser = require('body-parser');
 
 export class App {
     private express;
@@ -17,6 +18,7 @@ export class App {
 
     constructor() {
         this.express = express();
+        this.express.use(bodyParser.json());
         DBHandler.connectDB();
         this.services = [
             new ServiceRouterImpl()

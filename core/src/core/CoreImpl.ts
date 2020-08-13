@@ -7,7 +7,7 @@ export class CoreImpl implements CoreHandler {
 
     private commandsModel: CommandsModel;
     private varModel: VariableModel;
-    private client;
+    private static client;
 
     constructor() {
         this.commandsModel = CommandsModel.getInstance();
@@ -15,7 +15,7 @@ export class CoreImpl implements CoreHandler {
     }
 
     public attachEvents(client) {
-        this.client = client;
+        CoreImpl.client = client;
         client.addListener("message", (from, to, text, message) => {
             if (botConfig.botName === to) { // pm
                 this.getResponseFromMessage(from, 'PRIVMSG', text).then(responses => {
@@ -80,7 +80,7 @@ export class CoreImpl implements CoreHandler {
             }
         }
         if(out.length == 0) {
-            this.client.say(fromUser, 'no te entiendo bro, si queres ayuda escribí !ayuda');
+            CoreImpl.client.say(fromUser, 'no te entiendo bro, si queres ayuda escribí !ayuda');
             return;
         } else {
             return out;
@@ -111,10 +111,10 @@ export class CoreImpl implements CoreHandler {
                 if(envData.owners.indexOf(envData.user.toLowerCase()) > 0) {
                     response = response.replace(command[0], '').trim();
                     if(command[1] === 'join') {
-                        this.client.join(res[command[2]]);
+                        CoreImpl.client.join(res[command[2]]);
                     }
                     if(command[1] === 'part') {
-                        this.client.part(res[command[2]]);
+                        CoreImpl.client.part(res[command[2]]);
                     }
                     if(command[1] === 'kick') {
                         
@@ -164,6 +164,8 @@ export class CoreImpl implements CoreHandler {
         }
         return;
     }
+
+    
 
 }
 

@@ -17,7 +17,7 @@ export class ChatService implements BaseService {
 
     post(req: express.Request, resp: express.Response) {
         console.log(req.body);
-        resp.send('OK');
+        resp.send('OK-post');
     }
 
     put(req: express.Request, resp: express.Response) {

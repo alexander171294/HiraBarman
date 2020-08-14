@@ -1,58 +1,5 @@
 <section>
-    <article>
-        <header>Agregar comando</header>
-        <div>
-          <label>Solo para el canal: <span>(Opcional)</span></label>
-          <input type="text" placeholder="#canal"/>
-          <legend>
-            Puedes poner <b>PRIVMSG</b> para que solo funcione en privados (sin numeral)
-          </legend>
-        </div>
-        <div>
-          <label>Solo para el usuario: <span>(Opcional)</span></label>
-          <input type="text" placeholder="usuario"/>
-        </div>
-        <div>
-          <label>Comando:</label>
-          <input type="text" placeholder="!hola"/>
-          <legend>
-            <p>
-              En canales  <b>se deberá poner el nick</b> del bot al comienzo de la frase.<br />
-              Se soportan <b>expresiones regulares</b> <a href="https://regex101.com/">(probar aquí)</a> y se pueden usar en la respuestas los grupos con $1 donde 1 es el numero de grupo (0 es para el match completo)<br />
-            </p>
-          </legend>
-        </div>
-        <div>
-          <label>Respuesta</label>
-          <textarea>
-    
-          </textarea>
-          <legend>
-            <p>
-              Puedes usar variables que guarden un valor diferente para cada usuario con @{{'{'}}variable}
-            </p>
-            <p>
-                Puedes realizar operaciones con las variables como <b>@{{'{'}}variables++}</b> (esta sumará 1 cada vez que se ejecute y la cuenta la lleva por cada usuario)<br />
-            </p>
-            <p>
-                Puedes utilizar variables que cuenten para todo el canal con <b>#{{'{'}}variable}</b> (y realizar también operaciones matemáticas y tal) por privado esto se comporta por usuario como si fuera @{{'{'}}variable}<br />
-            </p>
-            <p>
-                Puedes utilizar el resultado de la regex <b>$1</b> por ejemplo, incluso en variables <b>@{{'{'}}variables=$1}</b> o <b>@{{'{'}}variables+$1}</b> por ejemplo<br />
-            </p>
-            <p>
-                Puedes utilizar variables globales como <b>%{{'{'}}user}</b> = user que nos habla, <b>%{{'{'}}owners}</b> = lista de usuarios habilitados para ejecutar comandos, <b>%{{'{'}}channel}</b>, <b>%{{'{'}}nick}</b> (del bot)<br />
-            </p>
-            <p>
-                Puedes utilizar comandos como respuesta pero solo se ejecutará si el nick del usuario que lo envía está en la lista de owners (<b>>>join$1</b> <b>>>part$1</b>, <b>>>kick$1</b>, <b>>>ban$1</b>)
-            </p>
-            <p>
-                Puedes utilizar un arreglo json para enviar más de un mensaje.
-            </p>
-          </legend>
-        </div>
-        <button>Agregar</button>
-    </article>
+    <app-addedit></app-addedit>
 </section>
 
 <section class="big">

@@ -7,6 +7,7 @@ import { ComandosComponent } from './pages/comandos/comandos.component';
 import { VariablesComponent } from './pages/variables/variables.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { AddeditComponent } from './pages/comandos/addedit/addedit.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { LogsComponent } from './pages/logs/logs.component';
     ComandosComponent,
     VariablesComponent,
     ConfiguracionComponent,
-    LogsComponent
+    LogsComponent,
+    AddeditComponent
   ],
   imports: [
     BrowserModule,

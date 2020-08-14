@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-addedit-commands',
@@ -8,10 +8,20 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AddeditComponent implements OnInit {
 
   @Input() editMode: boolean;
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  save() {
+    this.saved.emit();
+    if (this.editMode) {
+      
+    } else {
+
+    }
   }
 
 }

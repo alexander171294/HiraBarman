@@ -4,7 +4,7 @@
 
 <section class="big">
     <article>
-        <header>Lista de comandos</header>
+        <!-- <header>Lista de comandos</header> -->
         <nav>
             <label>Filtro por canales</label>
             <button class="active">Todos</button>
@@ -20,13 +20,31 @@
             <button>Harkito</button>
         </nav>
         <div class="tableContainer">
-            <p-table [value]="comandos" selectionMode="single" [(selection)]="selectedCommand" dataKey="id_command">
+            <p-table #dt [resizableColumns]="true" [value]="comandos" [loading]="isLoading" selectionMode="single" [(selection)]="selectedCommand" [filterDelay]="0" [globalFilterFields]="['fromuser','targetchannel','command']" dataKey="id_command">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        Lista de comandos
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width:12%">
+                        <col style="width:12%">
+                        <col style="width:20%">
+                        <col style="width:50%">
+                        <col style="width:10%">
+                    </colgroup>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="targetchannel">Channel <p-sortIcon field="targetchannel"></p-sortIcon></th>
-                        <th pSortableColumn="fromuser">User <p-sortIcon field="fromuser"></p-sortIcon></th>
-                        <th pSortableColumn="command">Command <p-sortIcon field="command"></p-sortIcon></th>
-                        <th pSortableColumn="response">Response <p-sortIcon field="response"></p-sortIcon></th>
+                        <th pResizableColumn pSortableColumn="targetchannel">Channel <p-sortIcon field="targetchannel"></p-sortIcon></th>
+                        <th pResizableColumn pSortableColumn="fromuser">User <p-sortIcon field="fromuser"></p-sortIcon></th>
+                        <th pResizableColumn pSortableColumn="command">Command <p-sortIcon field="command"></p-sortIcon></th>
+                        <th pResizableColumn pSortableColumn="response">Response <p-sortIcon field="response"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -52,3 +70,14 @@
         
     </article>
 </section>
+
+<p-confirmDialog #cd header="Confirmar" icon="pi pi-exclamation-triangle">
+    <p-footer>
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+    </p-footer>
+</p-confirmDialog>
+
+<p-dialog modal="modal" [(visible)]="editVisible">
+    <app-addedit-commands [editMode]="true" (saved)="editVisible = false"></app-addedit-commands>
+</p-dialog>

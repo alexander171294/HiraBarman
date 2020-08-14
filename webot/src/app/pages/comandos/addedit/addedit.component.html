@@ -51,6 +51,6 @@
         </p>
       </legend>
     </div>
-    <button *ngIf="!editMode">Agregar</button>
-    <button *ngIf="editMode">Guardar cambios</button>
+    <button *ngIf="!editMode" (click)="save()">Agregar</button>
+    <button *ngIf="editMode" (click)="save()">Guardar cambios</button>
 </article>

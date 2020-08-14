@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommandDTO } from './command.dto';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-comandos',
@@ -16,10 +17,28 @@ export class ComandosComponent implements OnInit {
   ];
 
   public selectedCommand: CommandDTO;
+  public editVisible: boolean = false;
+  public isLoading: boolean = false;
 
-  constructor() { }
+  constructor(private confSrv: ConfirmationService) { }
 
   ngOnInit(): void {
+  }
+
+  deleteCommand(comando: CommandDTO) {
+    console.log('Command dto');
+    this.confSrv.confirm({
+      message: 'Está seguro de eliminar este comando?',
+      accept: () => {
+        
+      }
+    });
+  }
+
+  editCommand(comando: CommandDTO) {
+    console.log('EDIT');
+    this.selectedCommand = comando;
+    this.editVisible = true;
   }
 
 }

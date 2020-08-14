@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +15,7 @@ import { ConfiguracionComponent } from './pages/configuracion/configuracion.comp
 import { LogsComponent } from './pages/logs/logs.component';
 import { AddeditComponent } from './pages/comandos/addedit/addedit.component';
 import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.component';
+
 
 
 @NgModule({
@@ -26,10 +31,15 @@ import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.com
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     NgbModule,
-    TableModule
+    TableModule,
+    ConfirmDialogModule,
+    DialogModule
   ],
-  providers: [],
+  providers: [
+    ConfirmationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

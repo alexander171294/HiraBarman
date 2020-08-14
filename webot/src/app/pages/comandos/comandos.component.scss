@@ -6,6 +6,7 @@ section {
     justify-content: center;
     vertical-align: top;
     height: 99vh;
+    animation: fadeIn forwards linear 0.3s;
     article {
         box-shadow: 0px 2px 5px #c5c5c5;
         background: white;
@@ -109,5 +110,26 @@ section.big {
                 }
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.actionButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: none;
+    margin: 0px 5px;
+    box-shadow: 0px 1px 5px #8080806e;
+    cursor: pointer;
+    &:hover {
+
     }
 }

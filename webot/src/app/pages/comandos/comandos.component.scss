@@ -9,6 +9,7 @@ section {
     article {
         box-shadow: 0px 2px 5px #c5c5c5;
         background: white;
+        border-radius: 3px;
         padding: 5px;
         > button {
             border: none;
@@ -84,10 +85,29 @@ section {
 section.big {
     display: inline-block;
     width: 68%;
-    height: fit-content;
-    margin: 1%;
+    margin: 1vh;
+    height: 98vh;
 }
-table {
-    text-align: center;
-    width: 100%;
+.tableContainer {
+    max-height: 80vh;
+    overflow-y: scroll;
+    table {
+        text-align: center;
+        width: 100%;
+        thead {
+            background: #e5e4ea;
+        }
+        tr {
+            &:hover{
+                background: #e5e4ea;
+            }
+            td {
+                svg {
+                    vertical-align: middle;
+                    margin: 2px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
 }

@@ -8,6 +8,7 @@ import { VariablesComponent } from './pages/variables/variables.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { AddeditComponent } from './pages/comandos/addedit/addedit.component';
+import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddeditComponent } from './pages/comandos/addedit/addedit.component';
     VariablesComponent,
     ConfiguracionComponent,
     LogsComponent,
-    AddeditComponent
+    AddeditComponent,
+    AddeditVariablesComponent
   ],
   imports: [
     BrowserModule,

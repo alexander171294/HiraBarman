@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-addedit',
+  selector: 'app-addedit-commands',
   templateUrl: './addedit.component.html',
   styleUrls: ['./addedit.component.scss']
 })

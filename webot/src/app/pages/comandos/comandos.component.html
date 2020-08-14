@@ -1,0 +1,155 @@
+<section>
+    <article>
+        <header>Agregar comando</header>
+        <div>
+          <label>Solo para el canal: <span>(Opcional)</span></label>
+          <input type="text" placeholder="#canal"/>
+          <legend>
+            Puedes poner <b>PRIVMSG</b> para que solo funcione en privados (sin numeral)
+          </legend>
+        </div>
+        <div>
+          <label>Solo para el usuario: <span>(Opcional)</span></label>
+          <input type="text" placeholder="usuario"/>
+        </div>
+        <div>
+          <label>Comando:</label>
+          <input type="text" placeholder="!hola"/>
+          <legend>
+            <p>
+              En canales  <b>se deberá poner el nick</b> del bot al comienzo de la frase.<br />
+              Se soportan <b>expresiones regulares</b> <a href="https://regex101.com/">(probar aquí)</a> y se pueden usar en la respuestas los grupos con $1 donde 1 es el numero de grupo (0 es para el match completo)<br />
+            </p>
+          </legend>
+        </div>
+        <div>
+          <label>Respuesta</label>
+          <textarea>
+    
+          </textarea>
+          <legend>
+            <p>
+              Puedes usar variables que guarden un valor diferente para cada usuario con @{{'{'}}variable}
+            </p>
+            <p>
+                Puedes realizar operaciones con las variables como <b>@{{'{'}}variables++}</b> (esta sumará 1 cada vez que se ejecute y la cuenta la lleva por cada usuario)<br />
+            </p>
+            <p>
+                Puedes utilizar variables que cuenten para todo el canal con <b>#{{'{'}}variable}</b> (y realizar también operaciones matemáticas y tal) por privado esto se comporta por usuario como si fuera @{{'{'}}variable}<br />
+            </p>
+            <p>
+                Puedes utilizar el resultado de la regex <b>$1</b> por ejemplo, incluso en variables <b>@{{'{'}}variables=$1}</b> o <b>@{{'{'}}variables+$1}</b> por ejemplo<br />
+            </p>
+            <p>
+                Puedes utilizar variables globales como <b>%{{'{'}}user}</b> = user que nos habla, <b>%{{'{'}}owners}</b> = lista de usuarios habilitados para ejecutar comandos, <b>%{{'{'}}channel}</b>, <b>%{{'{'}}nick}</b> (del bot)<br />
+            </p>
+            <p>
+                Puedes utilizar comandos como respuesta pero solo se ejecutará si el nick del usuario que lo envía está en la lista de owners (<b>>>join$1</b> <b>>>part$1</b>, <b>>>kick$1</b>, <b>>>ban$1</b>)
+            </p>
+            <p>
+                Puedes utilizar un arreglo json para enviar más de un mensaje.
+            </p>
+          </legend>
+        </div>
+        <button>Agregar</button>
+    </article>
+</section>
+
+<section class="big">
+    <article>
+        <header>Lista de comandos</header>
+        <nav>
+            <label>Filtro por canales</label>
+            <button class="active">Todos</button>
+            <button>PRIVMSG</button>
+            <button>#caballeros</button>
+            <button>#harkolandia</button>
+            <button>#caballeros</button>
+        </nav>
+        <nav>
+            <label>Filtro por usuario</label>
+            <button class="active">Todos</button>
+            <button>Mendax</button>
+            <button>Harkito</button>
+        </nav>
+        <table>
+            <thead>
+                <td>
+                    Channel
+                </td>
+                <td>
+                    User
+                </td>
+                <td>
+                    Command
+                </td>
+                <td>
+                    Response
+                </td>
+                <td>
+                    Acción
+                </td>
+            </thead>
+            <tr>
+                <td>#harkolandia</td>
+                <td>Mendax</td>
+                <td>bardea a ([a-zA-Z0-9_]+)</td>
+                <td>
+                    ["%user} ya va tomando @cerveza++}","Vamos un total de #cerveza++} cervezas vendidas!"]
+                </td>
+                <td>
+                    <svg style="color: red;width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-trash fa-w-14"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" class=""></path></svg>
+                    <svg style="width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-edit fa-w-18"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" class=""></path></svg>
+                </td>
+            </tr>
+            <tr>
+                <td>#harkolandia</td>
+                <td>Mendax</td>
+                <td>bardea a ([a-zA-Z0-9_]+)</td>
+                <td>
+                    ["%user} ya va tomando @cerveza++}","Vamos un total de #cerveza++} cervezas vendidas!"]
+                </td>
+                <td>
+                    <svg style="color: red;width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-trash fa-w-14"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" class=""></path></svg>
+                    <svg style="width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-edit fa-w-18"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" class=""></path></svg>
+                </td>
+            </tr>
+            <tr>
+                <td>#harkolandia</td>
+                <td>Mendax</td>
+                <td>bardea a ([a-zA-Z0-9_]+)</td>
+                <td>
+                    ["%user} ya va tomando @cerveza++}","Vamos un total de #cerveza++} cervezas vendidas!"]
+                </td>
+                <td>
+                    <svg style="color: red;width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-trash fa-w-14"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" class=""></path></svg>
+                    <svg style="width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-edit fa-w-18"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" class=""></path></svg>
+                </td>
+            </tr>
+            <tr>
+                <td>#harkolandia</td>
+                <td>Mendax</td>
+                <td>bardea a ([a-zA-Z0-9_]+)</td>
+                <td>
+                    ["%user} ya va tomando @cerveza++}","Vamos un total de #cerveza++} cervezas vendidas!"]
+                </td>
+                <td>
+                    <svg style="color: red;width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-trash fa-w-14"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" class=""></path></svg>
+                    <svg style="width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-edit fa-w-18"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" class=""></path></svg>
+                </td>
+            </tr>
+            <tr>
+                <td>#harkolandia</td>
+                <td>Mendax</td>
+                <td>bardea a ([a-zA-Z0-9_]+)</td>
+                <td>
+                    ["%user} ya va tomando @cerveza++}","Vamos un total de #cerveza++} cervezas vendidas!"]
+                </td>
+                <td>
+                    <svg style="color: red;width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-trash fa-w-14"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" class=""></path></svg>
+                    <svg style="width: 15px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-edit fa-w-18"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" class=""></path></svg>
+                </td>
+            </tr>
+        </table>
+    </article>
+</section>

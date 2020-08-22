@@ -56,6 +56,7 @@ export class VariablesComponent implements OnInit {
       message: 'Está seguro de eliminar este comando?',
       accept: () => {
         this.variablesSrv.delete(variable);
+        this.getDataGrid();
       }
     });
   }

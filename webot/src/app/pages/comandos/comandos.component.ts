@@ -10,12 +10,7 @@ import { ComandosService } from './comandos.service';
 })
 export class ComandosComponent implements OnInit {
 
-  public comandos: CommandDTO[] = [
-    {
-      command: 'asder',
-      response: 'asdqwe'
-    }
-  ];
+  public comandos: CommandDTO[] = [];
 
   public selectedCommand: CommandDTO = new CommandDTO();
   public newCommand: CommandDTO = new CommandDTO();
@@ -35,7 +30,7 @@ export class ComandosComponent implements OnInit {
     });
   }
 
-  getDataGrid() {
+  getDataGrid(): void {
     this.isLoading = true;
     const filters: any = {};
     if (this.channelSelected) {
@@ -48,11 +43,11 @@ export class ComandosComponent implements OnInit {
   }
 
   deleteCommand(comando: CommandDTO): void {
-    console.log('Command dto');
     this.confSrv.confirm({
       message: 'Está seguro de eliminar este comando?',
       accept: () => {
-        this.cmdSrv.delete(comando);
+        this.cmdSrv.delete(comando).subscribe();
+        this.getDataGrid();
       }
     });
   }

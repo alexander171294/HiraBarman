@@ -41,7 +41,7 @@ export class VariablesController {
 
     @Delete('/:id')
     public deleteVaraible(@Param('id') id: number) {
-        return this.variablAdp.getRepository().delete({id: id});
+        return this.variablAdp.getRepository().delete(id);
     }
 
 }

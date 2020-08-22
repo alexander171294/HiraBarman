@@ -8,13 +8,13 @@
         <header>Lista de variables</header>
         <nav>
             <label>Filtro por canales</label>
-            <button class="active" [class.active]="selectChannel(undefined)" (click)="channelSelected = undefined">Todos</button>
+            <button class="active" [class.active]="channelSelected == undefined" (click)="selectChannel(undefined)">Todos</button>
             <button (click)="selectChannel('PRIVMSG')" [class.active]="channelSelected == 'PRIVMSG'">PRIVMSG</button>
             <button *ngFor="let canal of channels" (click)="selectChannel(canal)" [class.active]="channelSelected == canal">{{canal}}</button>
         </nav>
         <nav>
             <label>Filtro por usuario</label>
-            <button class="active" [class.active]="selectUsuarios(undefined)" (click)="usuarioSelected = undefined">Todos</button>
+            <button class="active" [class.active]="usuarioSelected == undefined" (click)="selectUsuarios(undefined)">Todos</button>
             <button *ngFor="let users of usuarios" (click)="selectUsuarios(users)" [class.active]="usuarioSelected == users">{{users}}</button>
         </nav>
         <div class="tableContainer">

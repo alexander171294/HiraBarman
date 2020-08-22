@@ -34,7 +34,7 @@ export class CommandsController {
 
     @Delete('/:id')
     public async deleteCommand(@Param('id') id: number) {
-        return this.commandsAdp.getRepository().delete({id_command: id});
+        return this.commandsAdp.getRepository().delete(id);
     }
 
 }

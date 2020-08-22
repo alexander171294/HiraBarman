@@ -211,6 +211,18 @@ export class CoreService {
         return this.client.nick;
     }
 
+    public setNick(nick: string) {
+        this.client.send('NICK ' + nick)
+    }
+
+    public join(channel: string) {
+        this.client.join(channel);
+    }
+
+    public leave(channel: string) {
+        this.client.part(channel);
+    }
+
 }
 
 export interface EnvData {

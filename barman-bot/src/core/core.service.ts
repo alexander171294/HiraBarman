@@ -44,6 +44,34 @@ export class CoreService {
             }
             console.log(from + '=>' + to + ':' + text);
         });
+        this.client.addListener('nick', (oldnick, newnick, channels, message) => {
+            if(oldnick == botCFG.botName) {
+                botCFG.botName = newnick;
+            }
+        });
+        this.client.addListener('names', (channel, nicks) => {
+
+        });
+        this.client.addListener('join', (channel, nick, message) => {
+            if(nick === botCFG.botName) {
+
+            }
+        });
+        this.client.addListener('part', (channel, nick, reason, message) => {
+            if(nick === botCFG.botName) {
+                
+            }
+        });
+        this.client.addListener('quit', (nick, reason, channels, message) => {
+
+        });
+        this.client.addListener('kick', (channel, nick, by, reason, message) => {
+
+        });
+        this.client.addListener('channellist', (channel_list) => {
+            console.log('channel_list', channel_list);
+        });
+
     }
 
     private async getResponseFromMessage(fromUser: string, targetChannel: string, text: string): Promise<string[]> {
@@ -173,6 +201,14 @@ export class CoreService {
 
     public send(chnl: string, str: string) {
         this.client.say(chnl, str);
+    }
+
+    public getChannels() {
+        return this.client.chans;
+    }
+
+    public getNick() {
+        return this.client.nick;
     }
 
 }

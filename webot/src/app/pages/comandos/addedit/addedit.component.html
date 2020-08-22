@@ -3,18 +3,18 @@
     <header *ngIf="editMode">Editar comando</header>
     <div>
       <label>Solo para el canal: <span>(Opcional)</span></label>
-      <input type="text" placeholder="#canal"/>
+      <input type="text" placeholder="#canal" [(ngModel)]="comando.targetchannel"/>
       <legend>
         Puedes poner <b>PRIVMSG</b> para que solo funcione en privados (sin numeral)
       </legend>
     </div>
     <div>
       <label>Solo para el usuario: <span>(Opcional)</span></label>
-      <input type="text" placeholder="usuario"/>
+      <input type="text" placeholder="usuario" [(ngModel)]="comando.fromuser"/>
     </div>
     <div>
       <label>Comando:</label>
-      <input type="text" placeholder="!hola"/>
+      <input type="text" placeholder="!hola" [(ngModel)]="comando.command"/>
       <legend>
         <p>
           En canales  <b>se deberá poner el nick</b> del bot al comienzo de la frase.<br />
@@ -24,9 +24,7 @@
     </div>
     <div>
       <label>Respuesta</label>
-      <textarea>
-
-      </textarea>
+      <textarea [(ngModel)]="comando.response"></textarea>
       <legend>
         <p>
           Puedes usar variables que guarden un valor diferente para cada usuario con @{{'{'}}variable}

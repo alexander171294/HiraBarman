@@ -15,7 +15,9 @@ import { ConfiguracionComponent } from './pages/configuracion/configuracion.comp
 import { LogsComponent } from './pages/logs/logs.component';
 import { AddeditComponent } from './pages/comandos/addedit/addedit.component';
 import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -35,7 +37,10 @@ import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.com
     NgbModule,
     TableModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    HttpClientModule,
+    FormsModule,
+    ProgressSpinnerModule
   ],
   providers: [
     ConfirmationService

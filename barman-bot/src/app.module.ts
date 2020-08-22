@@ -1,3 +1,4 @@
+import { VariablesController } from './controllers/variables/variables.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseCFG } from './environment/database';
@@ -5,7 +6,7 @@ import { CoreService } from './core/core.service';
 import { Commands } from './database/commands/commands.entity';
 import { CommandsModule } from './database/commands/commands.module';
 import { Variable } from './database/variables/variable.entity';
-import { VariablesModule } from './database/variables/commands.module';
+import { VariablesModule } from './database/variables/variables.module';
 import { ChatController } from './controllers/chat/chat.controller';
 import { CommandsController } from './controllers/commands/commands.controller';
 
@@ -22,7 +23,7 @@ import { CommandsController } from './controllers/commands/commands.controller';
         Commands,
         Variable
       ],
-      // synchronize: true,
+      synchronize: databaseCFG.createSchema,
       autoLoadEntities: true,
     }),
     CommandsModule,
@@ -30,6 +31,7 @@ import { CommandsController } from './controllers/commands/commands.controller';
   ],
   controllers: [
     ChatController,
+    VariablesController,
     CommandsController
   ],
   providers: [

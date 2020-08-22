@@ -108,10 +108,10 @@ export class CoreService {
             >>ban$1
         */
         const rx = new RegExp(command, "gi");
-        const res = rx.exec(input)
+        const res = rx.exec(input);
+        console.log(res);
         if (res) {
             const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
-            console.log(response);
             if(command) {
                 if(envData.owners.indexOf(envData.user.toLowerCase()) > 0) {
                     response = response.replace(command[0], '').trim();
@@ -127,6 +127,7 @@ export class CoreService {
                     if(command[1] === 'ban') {
                         
                     }
+                    return 'Ok';
                 } else {
                     return 'Tu a mi no me mandas. :fu:';
                 }

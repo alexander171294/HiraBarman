@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { VariableDTO } from '../variables.dto';
 
 @Component({
   selector: 'app-addedit-variables',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddeditVariablesComponent implements OnInit {
 
-  constructor() { }
+  @Input() variable: VariableDTO;
+  @Input() editMode: boolean;
+  @Output() saved: EventEmitter<VariableDTO> = new EventEmitter<VariableDTO>();
+
+  constructor() {
+
+  }
 
   ngOnInit(): void {
+
+  }
+
+  save(): void {
+    this.saved.emit(this.variable);
   }
 
 }

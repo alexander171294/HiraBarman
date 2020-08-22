@@ -1,23 +1,14 @@
 <section>
-    <app-addedit-commands></app-addedit-commands>
+  <p-progressSpinner *ngIf="creando"></p-progressSpinner>
+  <app-addedit-commands *ngIf="!creando" (saved)="addCommand($event)" [comando]="newCommand"></app-addedit-commands>
 </section>
 
 <section class="big">
     <article>
-        <!-- <header>Lista de comandos</header> -->
         <nav>
             <label>Filtro por canales</label>
-            <button class="active">Todos</button>
-            <button>PRIVMSG</button>
-            <button>#caballeros</button>
-            <button>#harkolandia</button>
-            <button>#caballeros</button>
-        </nav>
-        <nav>
-            <label>Filtro por usuario</label>
-            <button class="active">Todos</button>
-            <button>Mendax</button>
-            <button>Harkito</button>
+            <button [class.active]="channelSelected == undefined" (click)="selectChannel(undefined)">Todos</button>
+            <button *ngFor="let channel of channels" (click)="selectChannel(channel)" [class.active]="channelSelected == channel">{{channel}}</button>
         </nav>
         <div class="tableContainer">
             <p-table #dt [resizableColumns]="true" [value]="comandos" [loading]="isLoading" selectionMode="single" [(selection)]="selectedCommand" [filterDelay]="0" [globalFilterFields]="['fromuser','targetchannel','command']" dataKey="id_command">
@@ -67,7 +58,7 @@
                 </ng-template>
             </p-table>
         </div>
-        
+
     </article>
 </section>
 
@@ -79,5 +70,5 @@
 </p-confirmDialog>
 
 <p-dialog modal="modal" [(visible)]="editVisible">
-    <app-addedit-commands [editMode]="true" (saved)="editVisible = false"></app-addedit-commands>
+    <app-addedit-commands [editMode]="true" (saved)="saveChange($event)" [comando]="selectedCommand"></app-addedit-commands>
 </p-dialog>

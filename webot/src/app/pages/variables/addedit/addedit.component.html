@@ -1,26 +1,27 @@
 <article>
-    <header>Agregar variable</header>
+    <header *ngIf="!editMode">Agregar variable</header>
+    <header *ngIf="editMode">Editar variable</header>
     <div>
       <label>De canal:</label>
-      <input type="text" placeholder="#canal"/>
+      <input type="text" placeholder="#canal" [(ngModel)]="variable.channel"/>
       <legend>
         Puedes poner <b>PRIVMSG</b> para que solo funcione en privados (sin numeral)
       </legend>
     </div>
     <div>
       <label>Del usuario:</label>
-      <input type="text" placeholder="usuario"/>
+      <input type="text" placeholder="usuario" [(ngModel)]="variable.username"/>
       <legend>
         Puedes poner <b>ALL</b> para todos los usuarios.
       </legend>
     </div>
     <div>
         <label>Nombre de variable: (sin espacios)</label>
-        <input type="text" placeholder="nombre"/>
+        <input type="text" placeholder="nombre" [(ngModel)]="variable.varname"/>
       </div>
     <div>
       <label>Valor</label>
-      <input type="text" placeholder="15"/>
+      <input type="text" placeholder="15" [(ngModel)]="variable.rawvalue"/>
     </div>
-    <button>Agregar</button>
+    <button (click)="save()">Guardar</button>
 </article>

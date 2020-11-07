@@ -1,3 +1,4 @@
+import { SettingsController } from './controllers/settings/settings.controller';
 import { VariablesController } from './controllers/variables/variables.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -32,7 +33,8 @@ import { CommandsController } from './controllers/commands/commands.controller';
   controllers: [
     ChatController,
     VariablesController,
-    CommandsController
+    CommandsController,
+    SettingsController
   ],
   providers: [
     CoreService

@@ -212,7 +212,7 @@ export class CoreService {
     }
 
     public setNick(nick: string) {
-        this.client.send('NICK ' + nick)
+        this.client.send('NICK', nick)
     }
 
     public join(channel: string) {

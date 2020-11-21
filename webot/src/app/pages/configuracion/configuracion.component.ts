@@ -28,6 +28,8 @@ export class ConfiguracionComponent implements OnInit {
     });
   }
 
-
+  changeNick() {
+    this.cfgSrv.setNick(this.newNick).subscribe();
+  }
 
 }

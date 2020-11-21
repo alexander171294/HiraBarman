@@ -15,7 +15,7 @@ export class ConfiguracionesService {
   }
 
   public setNick(nick: string): Observable<string> {
-    return this.httpC.post(environment.botApi + '/settings/nick?nick=' + nick, {}, {responseType: 'text'});
+    return this.httpC.put(environment.botApi + '/settings/nick?nick=' + nick, {}, {responseType: 'text'});
   }
 
   public getChannels(): Observable<string[]> {

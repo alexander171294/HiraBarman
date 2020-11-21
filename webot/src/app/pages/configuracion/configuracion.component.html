@@ -1,8 +1,10 @@
-<section>
+<article>
   <header>
-    Nick
-    <span>{{nick}}</span>
+    Configuraciones
   </header>
-  <input type="text" [(ngModel)]="newNick"/>
-  <button>Actualizar</button>
-</section>
+  <div>
+    <label>Nick ({{nick}})</label>
+    <input type="text" [(ngModel)]="newNick"/>
+  </div>
+  <button (click)="changeNick()">Actualizar</button>
+</article>

@@ -19,6 +19,17 @@ export class SettingsController {
         return nick;
     }
 
+    @Post('command')
+    public sendCommand(@Body() command): string {
+        console.log('command', command.command);
+        try {
+            this.coreSrv.sendRaw(command.command);
+            return '';
+        } catch(err) {
+            return 'error';
+        }
+    }
+
     @Get('channels')
     public getChannels(): any {
         return this.coreSrv.getChannels();
@@ -26,7 +37,7 @@ export class SettingsController {
 
     @Post('channels')
     public joinChannel(@Query('chan') chan: string): any {
-        this.coreSrv.join(chan);
+        this.coreSrv.join('#' + chan);
         return this.coreSrv.getChannels();
     }
 

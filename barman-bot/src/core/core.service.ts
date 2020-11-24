@@ -214,6 +214,10 @@ export class CoreService {
     public setNick(nick: string) {
         this.client.send('NICK', nick)
     }
+    
+    public sendRaw(command: string) {
+        this.client.send(...command.split(' '));
+    }
 
     public join(channel: string) {
         this.client.join(channel);

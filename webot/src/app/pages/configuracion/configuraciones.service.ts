@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +12,10 @@ export class ConfiguracionesService {
 
   public getNick(): Observable<string> {
     return this.httpC.get(environment.botApi + '/settings/nick', {responseType: 'text'});
+  }
+
+  public sendCommand(command: string): Observable<string> {
+    return this.httpC.post(environment.botApi + '/settings/command', {command}, {responseType: 'text'});
   }
 
   public setNick(nick: string): Observable<string> {

@@ -17,7 +17,7 @@ article {
   padding: 10px;
   width: 30%;
   margin: 2vh 2vw;
-  > button {
+  button {
       border: none;
       background: #2c65f6;
       width: 100%;
@@ -27,6 +27,7 @@ article {
       padding: 10px;
       cursor: pointer;
       transition: 0.5s background-color;
+      margin-bottom: 5px;
       &:hover {
           background: #30baf6;
       }

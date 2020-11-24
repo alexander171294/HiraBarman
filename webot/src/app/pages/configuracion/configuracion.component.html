@@ -5,6 +5,21 @@
   <div>
     <label>Nick ({{nick}})</label>
     <input type="text" [(ngModel)]="newNick"/>
+    <button (click)="changeNick()">Actualizar</button>
   </div>
-  <button (click)="changeNick()">Actualizar</button>
+  <div>
+    <label>Unirse a canal</label>
+    <input type="text" [(ngModel)]="channel"/>
+    <button (click)="joinChannel()">Unirse</button>
+  </div>
+  <div>
+    <label>Enviar comando de irc</label>
+    <input type="text" [(ngModel)]="command"/>
+    <button (click)="sendCommand()">Enviar</button>
+  </div>
+  <div>
+    <label>Owners</label>
+    <input type="text" [(ngModel)]="owners"/>
+    <button (click)="updateOwners()">Actualizar</button>
+  </div>
 </article>

@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { botCFG } from 'src/environment/bot';
 import { CommandsAdapter, FiltersOpt } from 'src/database/commands/commands.adapter';
 import * as irc from 'irc';
 import { VariableAdapter } from 'src/database/variables/variable.adapter';
+import { exception } from 'console';
+import { Commands } from 'src/database/commands/commands.entity';
 
 
 @Injectable()
 export class CoreService {
 
+    private readonly logger = new Logger(CoreService.name);
+
     private client;
+    private channelsNicks = {};
 
     constructor(
         private commandAdp: CommandsAdapter,
@@ -25,19 +30,19 @@ export class CoreService {
             if (botCFG.botName === to) { // pm
                 this.getResponseFromMessage(from, 'PRIVMSG', text).then(responses => {
                     if(responses) {
-                        responses.forEach(response => {
-                            console.log('OUT: ', response, from);
-                            this.client.say(from, response);
-                        });
+                        // responses.forEach(response => {
+                            // console.log('OUT: ', response, from);
+                            this.client.say(from, responses);
+                        // });
                     }
                 });
             } else { // channel
                 if (text.indexOf(botCFG.botName) >= 0) { // mention
                     this.getResponseFromMessage(from, to, text.replace(botCFG.botName, '')).then(responses => {
                         if(responses) {
-                            responses.forEach(response => {
-                                this.client.say(to, response);
-                            })
+                            // responses.forEach(response => {
+                                this.client.say(to, responses);
+                            // })
                         }
                     })
                 }
@@ -50,7 +55,7 @@ export class CoreService {
             }
         });
         this.client.addListener('names', (channel, nicks) => {
-
+            this.channelsNicks[channel.slice(1)] = nicks;
         });
         this.client.addListener('join', (channel, nick, message) => {
             if(nick === botCFG.botName) {
@@ -76,12 +81,13 @@ export class CoreService {
         });
     }
 
-    private async getResponseFromMessage(fromUser: string, targetChannel: string, text: string): Promise<string[]> {
+    private async getResponseFromMessage(fromUser: string, targetChannel: string, text: string): Promise<string> {
         const filters = new FiltersOpt();
-        filters.fromUser = fromUser;
-        filters.targetChannel = targetChannel;
+        filters.fromUser = fromUser.toLocaleLowerCase();
+        filters.targetChannel = targetChannel.toLocaleLowerCase();
         let out = [];
-        const data = await this.commandAdp.getCommands(filters);
+        let data = await this.commandAdp.getCommands(filters);
+        data = this.selectBestCommands(data);
         for(const cmd of data) {
             const context = targetChannel === 'PIRVMSG' ? 'all' : targetChannel;
             let multiResp;
@@ -115,10 +121,14 @@ export class CoreService {
             }
         }
         if(out.length == 0) {
-            this.client.say(fromUser, 'no te entiendo bro, si queres ayuda escribí !ayuda');
+            this.client.say(fromUser, 'Oops, no te entiendo :(, si queres ayuda escribí !ayuda');
             return;
         } else {
-            return out;
+            if(out.length > 1) {
+                return out[Math.floor(Math.random() * out.length)];
+            } else {
+                return out[0];
+            }
         }
     }
 
@@ -136,10 +146,12 @@ export class CoreService {
             >>part$1
             >>kick$1
             >>ban$1
+            *{sno} (si o no)
+            *{rnd} nick random del canal
+            *{d10} dice 10
         */
         const rx = new RegExp(command, "gi");
         const res = rx.exec(input);
-        console.log(res);
         if (res) {
             const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
             if(command) {
@@ -196,6 +208,22 @@ export class CoreService {
                     response = response.replace(r, envData[enVar[1]]);
                 })
             }
+            const sn = response.match(/\*{sno}/g);
+            if(sn) {
+                const ysn = Math.random() > 0.5 ? 'si' : 'no';
+                response = response.replace('*{sno}', ysn);
+            }
+            const dice = response.match(/\*{d[0-9]+}/g);
+            if(dice) {
+                const diceNumber = parseInt(/\*{d([0-9]+)}/.exec(dice[0])[1]);
+                const result = Math.floor(Math.random() * diceNumber) + 1;
+                response = response.replace(dice[0], ''+result);
+            }
+            const rnd = response.match(/\*{rnd}/g);
+            if(rnd) {
+                const usersInChannel = Object.entries(this.channelsNicks[envData.channel.slice(1)]);
+                response = response.replace('*{rnd}', usersInChannel[Math.floor(Math.random()*(usersInChannel.length))][0]);
+            }
             return response;
         }
         return;
@@ -227,6 +255,21 @@ export class CoreService {
 
     public leave(channel: string) {
         this.client.part(channel);
+    }
+
+    public selectBestCommands(commands: Commands[]): Commands[] {
+        // filtramos los comandos que son para usuarios particulares
+        const relevants = [];
+        commands.forEach(command => {
+            if(command.fromuser) {
+                relevants.push(command);
+            }
+        });
+        if(relevants.length > 0) {
+            return relevants;
+        } else {
+            return commands;
+        }
     }
 
 }

@@ -5,7 +5,7 @@ export const botCFG = {
 		"#LaTaberna"
 	],
 	"server": "irc.hirana.net",
-	"botName": "Barman",
+	"botName": "BarmanTst",
 	"owners": [
 		'Alex',
 		'maguito'

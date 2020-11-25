@@ -1,12 +1,16 @@
 logs
-Cuando hay multiples comandos con distintos target, tomar el mas específico (por ejemplo si hay uno abierto y uno para responderle a x usuario)
-Cuando hay multiples resultados por distintos matches con db randomizar.
-Crear variable randomizada de nicks.
 bienvenidas por canal
 Agregar boolean para responder al privado
 Regex en usuarios
-Sumas con variables de entrada (propina por ejemplo)
+Case insensitive en nicks
+Sumas con variables de entrada (propina por ejemplo) @{variables+$1}
+Variables seto a fijo @{variables=0}
 
 Panel web para cambiar valores y tal.
 Chat en panel para poder hablar como si fuera el bot.
 Logs transferibles a telegram y respuestas desde telegram.
+
+random entre frases:
+/{palabra asd|palabra qew|palabra3}
+
+hacer que te diga al privado cada cierto tiempo para no spammear.

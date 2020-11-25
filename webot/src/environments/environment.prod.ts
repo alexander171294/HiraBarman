@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  botApi: 'http://server1.tandilserver.com:3061'
 };

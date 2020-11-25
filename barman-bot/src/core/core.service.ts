@@ -71,7 +71,9 @@ export class CoreService {
         this.client.addListener('channellist', (channel_list) => {
             console.log('channel_list', channel_list);
         });
-
+        this.client.addListener('error', function(message) {
+            console.log('error: ', message);
+        });
     }
 
     private async getResponseFromMessage(fromUser: string, targetChannel: string, text: string): Promise<string[]> {
@@ -212,11 +214,11 @@ export class CoreService {
     }
 
     public setNick(nick: string) {
-        this.client.send('NICK', nick)
+        this.client.send('NICK', nick);
     }
     
     public sendRaw(command: string) {
-        this.client.send(...command.split(' '));
+        const res = this.client.send(...command.split(' '));
     }
 
     public join(channel: string) {

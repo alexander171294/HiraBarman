@@ -43,7 +43,7 @@ export class SettingsController {
 
     @Delete('channels')
     public leaveChannel(@Query('chan') chan: string): any {
-        this.coreSrv.leave(chan);
+        this.coreSrv.leave('#' + chan);
         return this.coreSrv.getChannels();
     }
 

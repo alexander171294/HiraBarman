@@ -20,9 +20,7 @@ export class ConfiguracionComponent implements OnInit {
   constructor(private cfgSrv: ConfiguracionesService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.cfgSrv.getChannels().subscribe(channels => {
-      this.channels = channels;
-    });
+    this.getChannels();
     this.cfgSrv.getNick().subscribe(nick => {
       this.nick = nick;
       this.newNick = nick;
@@ -32,7 +30,19 @@ export class ConfiguracionComponent implements OnInit {
     });
   }
 
-  changeNick() {
+  getChannels(): void {
+    this.cfgSrv.getChannels().subscribe(channels => {
+      const chnls = [];
+      Object.entries(channels).forEach(e => {
+        console.log('Channel: ',e);
+        chnls.push(e[1]);
+      });
+      this.channels = chnls;
+      console.log(chnls);
+    });
+  }
+
+  changeNick(): void {
     this.cfgSrv.setNick(this.newNick).subscribe(r => {
       this.toastr.success('Cambio de nick', 'Nuevo nick: ' + this.nick);
       this.newNick = '';
@@ -41,16 +51,30 @@ export class ConfiguracionComponent implements OnInit {
     });
   }
 
-  joinChannel() {
+  joinChannel(): void {
     this.cfgSrv.joinChannel(this.channel.replace('#', '')).subscribe(r => {
       this.toastr.success('Nuevo canal', 'Unido al canal: ' + this.channel);
+      setTimeout(() => {
+        this.getChannels();
+      }, 250);
       this.channel = '';
     }, err => {
       this.toastr.error('No se pudo ingresar al canal.');
     });
   }
 
-  sendCommand() {
+  leave(chnl: string): void {
+    this.cfgSrv.leaveChannel(chnl.replace('#', '')).subscribe(r => {
+      this.toastr.success('Salir del canal', 'Me salí del canal: ' + chnl);
+      setTimeout(() => {
+        this.getChannels();
+      }, 250);
+    }, err => {
+      this.toastr.error('No se pudo ingresar al canal.');
+    });
+  }
+
+  sendCommand(): void {
     this.cfgSrv.sendCommand(this.command).subscribe(r => {
       this.toastr.success('Ejecución de comando', 'Comando ejecutado: ' + this.command);
       this.command = '';
@@ -59,7 +83,7 @@ export class ConfiguracionComponent implements OnInit {
     });
   }
 
-  updateOwners() {
+  updateOwners(): void {
     this.cfgSrv.setOwners(this.owners.split(',')).subscribe(r => {
       this.toastr.success('Owners', 'Owners: ' + r.join(','));
       this.owners = r.join(',');

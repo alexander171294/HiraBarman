@@ -17,6 +17,43 @@ article {
   padding: 10px;
   width: 30%;
   margin: 2vh 2vw;
+  display: inline-block;
+  vertical-align: top;
+  ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    font-family: helvetica;
+    li {
+      background: #8262ff;
+      color: white;
+      height: 28px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 3px;
+      margin: 5px 0px;
+      &:hover {
+        background: #6f51e4;
+        cursor: not-allowed;
+      }
+      span {
+        &.name {
+          display: inline-block;
+          padding: 5px;
+          background: #552cf6;
+        }
+        &.modes {
+          top: 0px;
+          right: 0px;
+          display: block;
+          position: absolute;
+          line-height: 22px;
+          background: #552cf6;
+          padding: 3px;
+        }
+      }
+    }
+  }
   button {
       border: none;
       background: #2c65f6;

@@ -13,3 +13,5 @@ random entre frases:
 /{palabra asd|palabra qew|palabra3}
 
 hacer que te diga al privado cada cierto tiempo para no spammear.
+
+*BUGFIX Al editar un comando parece que los valores nulos dejan de ser nulos.

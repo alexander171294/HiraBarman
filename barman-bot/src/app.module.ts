@@ -16,7 +16,7 @@ import { CommandsController } from './controllers/commands/commands.controller';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: databaseCFG.host,
-      port: databaseCFG.port,
+      port: databaseCFG.port as number,
       username: databaseCFG.user,
       password: databaseCFG.password,
       database: databaseCFG.name,

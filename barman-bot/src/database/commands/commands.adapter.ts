@@ -15,14 +15,14 @@ export class CommandsAdapter {
         let target = '';
         let params:any = {};
         if (filters.targetChannel) {
-            target = '(lower(targetChannel) is null' + target + ' OR lower(targetChannel) = :tgch)';
+            target = '(targetChannel is null' + target + ' OR lower(targetChannel) = :tgch)';
             params.tgch = filters.targetChannel;
         }
         if(filters.fromUser) {
             if (target != '') {
                 target += ' AND ';
             }
-            target += '(lower(fromUser) is null OR lower(fromUser) = :fusr)';
+            target += '(fromUser is null OR lower(fromUser) = :fusr)';
             params.fusr = filters.fromUser;
         }
         const query = this.commandsRepository.createQueryBuilder("commands");

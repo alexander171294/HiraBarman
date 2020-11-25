@@ -85,9 +85,9 @@ export class CoreService {
         const filters = new FiltersOpt();
         filters.fromUser = fromUser.toLocaleLowerCase();
         filters.targetChannel = targetChannel.toLocaleLowerCase();
-        let out = [];
+        let outNormals = [];
+        let outRelevants = [];
         let data = await this.commandAdp.getCommands(filters);
-        data = this.selectBestCommands(data);
         for(const cmd of data) {
             const context = targetChannel === 'PIRVMSG' ? 'all' : targetChannel;
             let multiResp;
@@ -104,7 +104,11 @@ export class CoreService {
                         owners: botCFG.owners
                     });
                     if(r) {
-                        out.push(r);
+                        if(cmd.fromuser) {
+                            outRelevants.push(r);
+                        } else {
+                            outNormals.push(r);
+                        }
                     }
                 }
             } else {
@@ -116,10 +120,22 @@ export class CoreService {
                     owners: botCFG.owners
                 });
                 if(r) {
-                    out.push(r);
+                    if(cmd.fromuser) {
+                        outRelevants.push(r);
+                    } else {
+                        outNormals.push(r);
+                    }
                 }
             }
         }
+
+        let out;
+        if(outRelevants.length > 0) {
+            out = outRelevants;
+        } else {
+            out = outNormals;
+        }
+        
         if(out.length == 0) {
             this.client.say(fromUser, 'Oops, no te entiendo :(, si queres ayuda escribí !ayuda');
             return;
@@ -255,21 +271,6 @@ export class CoreService {
 
     public leave(channel: string) {
         this.client.part(channel);
-    }
-
-    public selectBestCommands(commands: Commands[]): Commands[] {
-        // filtramos los comandos que son para usuarios particulares
-        const relevants = [];
-        commands.forEach(command => {
-            if(command.fromuser) {
-                relevants.push(command);
-            }
-        });
-        if(relevants.length > 0) {
-            return relevants;
-        } else {
-            return commands;
-        }
     }
 
 }

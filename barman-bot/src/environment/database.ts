@@ -3,6 +3,6 @@ export const databaseCFG = {
     host: process.env.DBHOST ? process.env.DBHOST : 'localhost',
     password: process.env.DBPASS ? process.env.DBPASS : 'dbpass',
     name: process.env.DBNAME ? process.env.DBNAME : 'dbname', // process.env.USER
-    port: 5432,
+    port: process.env.DBPORT ? process.env.DBPORT : 5432,
     createSchema: true
 };

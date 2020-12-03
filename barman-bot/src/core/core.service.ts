@@ -5,6 +5,7 @@ import { CommandsAdapter, FiltersOpt } from 'src/database/commands/commands.adap
 import * as irc from 'irc';
 import { VariableAdapter } from 'src/database/variables/variable.adapter';
 import { Quotes } from 'src/database/quotes/quotes.entity';
+import { HistoryAdapter } from 'src/database/history/history.adapter';
 
 @Injectable()
 export class CoreService {
@@ -17,7 +18,8 @@ export class CoreService {
     constructor(
         private commandAdp: CommandsAdapter,
         private variableAdp: VariableAdapter,
-        private quoteAdp: QuotesAdapter
+        private quoteAdp: QuotesAdapter,
+        private historyAdp: HistoryAdapter
     ) {
         this.client = new irc.Client(botCFG.server, botCFG.botName, {
             channels: botCFG.channels
@@ -47,7 +49,8 @@ export class CoreService {
                     })
                 }
             }
-            console.log(from + '=>' + to + ':' + text);
+            this.logger.log(from + ' => ' + to + ': ' + text);
+            this.historyAdp.add(from, to, text);
         });
         this.client.addListener('nick', (oldnick, newnick, channels, message) => {
             if(oldnick == botCFG.botName) {

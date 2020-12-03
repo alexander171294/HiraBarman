@@ -11,6 +11,7 @@ import { VariablesModule } from './database/variables/variables.module';
 import { ChatController } from './controllers/chat/chat.controller';
 import { CommandsController } from './controllers/commands/commands.controller';
 import { QuotesModule } from './database/quotes/quotes.module';
+import { HistoryModule } from './database/history/history.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { QuotesModule } from './database/quotes/quotes.module';
     }),
     CommandsModule,
     VariablesModule,
-    QuotesModule
+    QuotesModule,
+    HistoryModule
   ],
   controllers: [
     ChatController,

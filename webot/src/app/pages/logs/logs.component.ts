@@ -1,6 +1,7 @@
 import { ConfiguracionesService } from './../configuracion/configuraciones.service';
 import { LogData, LogsService } from './logs.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-logs',
@@ -15,7 +16,7 @@ export class LogsComponent implements OnInit {
   public canalSeleccionado: string;
   public message: string;
 
-  constructor(private logSrv: LogsService, private cfgSrv: ConfiguracionesService) { }
+  constructor(private logSrv: LogsService, private cfgSrv: ConfiguracionesService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -36,7 +37,10 @@ export class LogsComponent implements OnInit {
 
   public kp(evt) {
     if (evt.keyCode === 13) {
-      this.cfgSrv.say(this.canalSeleccionado.slice(1), this.message);
+      const message = this.message;
+      this.cfgSrv.say(this.canalSeleccionado.slice(1), message).subscribe(() => {
+        this.toastr.success(message, 'Mensaje enviado');
+      });
       const elem: any = document.getElementById('messenger');
       elem.value = '';
       elem.focus();

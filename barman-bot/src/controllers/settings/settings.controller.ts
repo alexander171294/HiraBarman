@@ -59,9 +59,9 @@ export class SettingsController {
     }
 
     @Post('say/:channel')
-    public say(@Param('channel') channel: string, @Body() message: string) {
+    public say(@Param('channel') channel: string, @Body() message: {msg: string}) {
         channel = channel[0] === '#' ? channel : '#'+channel;
-        this.coreSrv.send(channel, message);
+        this.coreSrv.send(channel, message.msg);
     }
 
 }

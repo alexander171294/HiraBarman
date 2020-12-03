@@ -42,7 +42,7 @@ export class ConfiguracionesService {
     return this.httpC.put<string[]>(environment.botApi + '/settings/owners', owners);
   }
 
-  public say(channel: string, message: string): Observable<void> {
-    return this.httpC.post<void>(environment.botApi + '/settings/say/' + channel, message);
+  public say(channel: string, msg: string): Observable<void> {
+    return this.httpC.post<void>(environment.botApi + '/settings/say/' + channel, {msg});
   }
 }

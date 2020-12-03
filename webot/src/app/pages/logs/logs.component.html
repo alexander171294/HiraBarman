@@ -49,6 +49,6 @@
           </ng-template>
         </p-table>
       </div>
-      <input type="text" placeholder="mensaje a enviar" [(ngModel)]="message" (keypress)="kp($event)" id="messenger" class="messenger"/>
+      <input *ngIf="canalSeleccionado" type="text" placeholder="mensaje a enviar" [(ngModel)]="message" (keypress)="kp($event)" id="messenger" class="messenger"/>
   </article>
 </section>

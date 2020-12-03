@@ -257,7 +257,9 @@ export class CoreService {
             if(!quote) {
                 const composed = /\*{quote=([0-9]+)}/g.exec(response);
                 quote = composed;
-                quoteNro = parseInt(composed[1]);
+                if(composed) {
+                    quoteNro = parseInt(composed[1]);
+                }
             }
             if(quote) {
                 let quote: Quotes;

@@ -11,7 +11,7 @@
             <button *ngFor="let channel of channels" (click)="selectChannel(channel)" [class.active]="channelSelected == channel">{{channel}}</button>
         </nav>
         <div class="tableContainer">
-            <p-table [paginator]="true" [rows]="12" #dt [resizableColumns]="true" [value]="comandos" [loading]="isLoading" selectionMode="single" [(selection)]="selectedCommand" [filterDelay]="0" [globalFilterFields]="['fromuser','targetchannel','command']" dataKey="id_command">
+            <p-table [paginator]="true" [rows]="14" #dt [resizableColumns]="true" [value]="comandos" [loading]="isLoading" selectionMode="single" [(selection)]="selectedCommand" [filterDelay]="0" [globalFilterFields]="['fromuser','targetchannel','command']" dataKey="id_command">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
                         Lista de comandos

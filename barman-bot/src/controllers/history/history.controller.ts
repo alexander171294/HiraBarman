@@ -15,7 +15,12 @@ export class HistoryController {
     public getHistory(@Param('channel') channel: string) {
         channel = channel[0] === '#' ? channel : '#'+channel;
         return this.historyAdp.getRepository().find({
-            channel
+            order: {
+                id_log: 'DESC'
+            },
+            where: {
+                channel
+            }
         });
     }
 

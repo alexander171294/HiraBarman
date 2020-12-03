@@ -13,7 +13,7 @@
   <article>
       <header>Historial de conversaciones</header>
       <div class="tableContainer">
-        <p-table #dt [resizableColumns]="true" [value]="logs" [paginator]="true" [rows]="12" [loading]="cargando" [filterDelay]="0" [globalFilterFields]="['channel','username','message', 'time']" dataKey="id_log">
+        <p-table #dt [resizableColumns]="true" [value]="logs" [scrollable]="true" [rows]="15" [loading]="cargando" [filterDelay]="0" [globalFilterFields]="['channel','username','message', 'time']" dataKey="id_log">
           <ng-template pTemplate="caption">
               <div class="table-header">
                 {{canalSeleccionado}}

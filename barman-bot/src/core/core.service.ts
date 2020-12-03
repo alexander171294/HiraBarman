@@ -140,7 +140,8 @@ export class CoreService {
         }
         
         if(out.length == 0) {
-            this.client.say(fromUser, 'Oops, no te entiendo :(, si queres ayuda escribí !ayuda');
+            // this.client.say(fromUser, 'Oops, no te entiendo :(, si queres ayuda escribí !ayuda');
+            this.logger.error('Mensaje no comprendido: ' + fromUser + '@' + targetChannel + ' :: ' + text);
             return;
         } else {
             if(out.length > 1) {

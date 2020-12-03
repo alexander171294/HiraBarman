@@ -5,9 +5,10 @@ export const botCFG = {
 		"#LaTaberna"
 	],
 	"server": "irc.hirana.net",
-	"botName": "Barman",
+	"botName": "NoSoyBarman",
 	"owners": [
-		'Alex',
-		'maguito'
+		'alex',
+		'maguito',
+		'gabriela-'
 	]
 };

@@ -1,11 +1,10 @@
+import { QuotesAdapter } from './../database/quotes/quotes.adapter';
 import { Injectable, Logger } from '@nestjs/common';
 import { botCFG } from 'src/environment/bot';
 import { CommandsAdapter, FiltersOpt } from 'src/database/commands/commands.adapter';
 import * as irc from 'irc';
 import { VariableAdapter } from 'src/database/variables/variable.adapter';
-import { exception } from 'console';
-import { Commands } from 'src/database/commands/commands.entity';
-
+import { Quotes } from 'src/database/quotes/quotes.entity';
 
 @Injectable()
 export class CoreService {
@@ -17,7 +16,8 @@ export class CoreService {
 
     constructor(
         private commandAdp: CommandsAdapter,
-        private variableAdp: VariableAdapter
+        private variableAdp: VariableAdapter,
+        private quoteAdp: QuotesAdapter
     ) {
         this.client = new irc.Client(botCFG.server, botCFG.botName, {
             channels: botCFG.channels
@@ -162,6 +162,7 @@ export class CoreService {
             >>part$1
             >>kick$1
             >>ban$1
+            >>quote$1 = crear quote :: quote (.+)$
             *{sno} (si o no)
             *{rnd} nick random del canal
             *{d10} dice 10
@@ -171,13 +172,15 @@ export class CoreService {
         if (res) {
             const command = />>([a-zA-Z]+)\$([0-9]+)/gi.exec(response);
             if(command) {
-                if(envData.owners.indexOf(envData.user.toLowerCase()) > 0) {
+                if(envData.owners.indexOf(envData.user.toLowerCase()) >= 0) {
                     response = response.replace(command[0], '').trim();
                     if(command[1] === 'join') {
                         this.client.join(res[command[2]]);
+                        return 'Ok';
                     }
                     if(command[1] === 'part') {
                         this.client.part(res[command[2]]);
+                        return 'Ok';
                     }
                     if(command[1] === 'kick') {
                         
@@ -185,8 +188,13 @@ export class CoreService {
                     if(command[1] === 'ban') {
                         
                     }
-                    return 'Ok';
+                    if(command[1] === 'quote') {
+                        const q = await this.quoteAdp.add(res[command[2]], envData.channel, envData.user);
+                        return 'Quote realizado: ' + q.identifiers[0].id_quote;
+                    }
                 } else {
+                    this.logger.debug(envData.user);
+                    this.logger.debug(envData.owners);
                     return 'Tu a mi no me mandas. :fu:';
                 }
             }
@@ -239,6 +247,23 @@ export class CoreService {
             if(rnd) {
                 const usersInChannel = Object.entries(this.channelsNicks[envData.channel.slice(1)]);
                 response = response.replace('*{rnd}', usersInChannel[Math.floor(Math.random()*(usersInChannel.length))][0]);
+            }
+            // QUOTES
+            let quote = response.match(/\*{quote}/g);
+            let quoteNro = -1;
+            if(!quote) {
+                const composed = /\*{quote=([0-9]+)}/g.exec(response);
+                quote = composed;
+                quoteNro = parseInt(composed[1]);
+            }
+            if(quote) {
+                let quote: Quotes;
+                if(quoteNro > 0) {
+                    quote = await this.quoteAdp.getRepository().findOne(quoteNro)
+                } else {
+                    quote = await this.quoteAdp.getRepository().findOne();
+                }
+                response = '<'+quote.channel+'|' + quote.quoteado.getDate() + '-' + (quote.quoteado.getMonth() + 1) + '-' + quote.quoteado.getFullYear() + '> ' + quote.quote;
             }
             return response;
         }

@@ -10,6 +10,7 @@ import { Variable } from './database/variables/variable.entity';
 import { VariablesModule } from './database/variables/variables.module';
 import { ChatController } from './controllers/chat/chat.controller';
 import { CommandsController } from './controllers/commands/commands.controller';
+import { QuotesModule } from './database/quotes/quotes.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { CommandsController } from './controllers/commands/commands.controller';
       autoLoadEntities: true,
     }),
     CommandsModule,
-    VariablesModule
+    VariablesModule,
+    QuotesModule
   ],
   controllers: [
     ChatController,

@@ -41,4 +41,8 @@ export class ConfiguracionesService {
   public setOwners(owners: string[]): Observable<string[]> {
     return this.httpC.put<string[]>(environment.botApi + '/settings/owners', owners);
   }
+
+  public say(channel: string, message: string): Observable<void> {
+    return this.httpC.post<void>(environment.botApi + '/settings/say/' + channel, message);
+  }
 }

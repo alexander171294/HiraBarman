@@ -11,8 +11,9 @@ export class HistoryController {
         return this.historyAdp.getChannels();
     }
 
-    @Get(':channel') 
+    @Get('channels/:channel') 
     public getHistory(@Param('channel') channel: string) {
+        channel = channel[0] === '#' ? channel : '#'+channel;
         return this.historyAdp.getRepository().find({
             channel
         });

@@ -1,3 +1,4 @@
+import { QuotesController } from './controllers/quotes/quotes.controller';
 import { SettingsController } from './controllers/settings/settings.controller';
 import { VariablesController } from './controllers/variables/variables.controller';
 import { Module } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { ChatController } from './controllers/chat/chat.controller';
 import { CommandsController } from './controllers/commands/commands.controller';
 import { QuotesModule } from './database/quotes/quotes.module';
 import { HistoryModule } from './database/history/history.module';
+import { HistoryController } from './controllers/history/history.controller';
 
 @Module({
   imports: [
@@ -38,7 +40,9 @@ import { HistoryModule } from './database/history/history.module';
     ChatController,
     VariablesController,
     CommandsController,
-    SettingsController
+    SettingsController,
+    HistoryController,
+    QuotesController
   ],
   providers: [
     CoreService

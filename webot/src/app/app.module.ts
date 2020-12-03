@@ -6,6 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ButtonModule} from 'primeng/button';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -20,6 +21,7 @@ import { AddeditVariablesComponent } from './pages/variables/addedit/addedit.com
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { QuotesComponent } from './pages/quotes/quotes.component';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     ConfiguracionComponent,
     LogsComponent,
     AddeditComponent,
-    AddeditVariablesComponent
+    AddeditVariablesComponent,
+    QuotesComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     DialogModule,
     HttpClientModule,
     FormsModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ButtonModule
   ],
   providers: [
     ConfirmationService

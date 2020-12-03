@@ -1,5 +1,5 @@
 import { HistoryAdapter } from 'src/database/history/history.adapter';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 
 @Controller('history')
 export class HistoryController {

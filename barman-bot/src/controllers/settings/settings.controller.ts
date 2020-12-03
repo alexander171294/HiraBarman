@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Delete, Query, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Query, Put, Param } from '@nestjs/common';
 import { CoreService } from 'src/core/core.service';
 import { get } from 'http';
 import { botCFG } from 'src/environment/bot';
@@ -56,6 +56,12 @@ export class SettingsController {
     public setOwners(@Body() owners: string[]): any {
         botCFG.owners = owners;
         return botCFG.owners;
+    }
+
+    @Post('say/:channel')
+    public say(@Param('channel') channel: string, @Body() message: string) {
+        channel = channel[0] === '#' ? channel : '#'+channel;
+        this.coreSrv.send(channel, message);
     }
 
 }

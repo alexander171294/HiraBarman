@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  botApi: 'http://localhost:3000'
+  // botApi: 'http://localhost:3000'
+  botApi: 'http://server1.tandilserver.com:3061'
 };
 
 /*

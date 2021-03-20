@@ -7,6 +7,10 @@ section {
     vertical-align: top;
     height: 99vh;
     animation: fadeIn forwards linear 0.3s;
+
+    max-height: 96%;
+    overflow: auto;
+    margin-top: 2%;
     article {
         box-shadow: 0px 2px 5px #c5c5c5;
         background: white;

@@ -13,15 +13,17 @@
           </ng-template>
           <ng-template pTemplate="colgroup">
               <colgroup>
+                  <col style="width:4%">
                   <col style="width:18%">
                   <col style="width:16%">
-                  <col style="width:50%">
+                  <col style="width:48%">
                   <col style="width:12%">
                   <col style="width:4%">
               </colgroup>
           </ng-template>
           <ng-template pTemplate="header">
               <tr>
+                  <th pResizableColumn pSortableColumn="id_quote">Nro. <p-sortIcon field="channel"></p-sortIcon></th>
                   <th pResizableColumn pSortableColumn="channel">Channel <p-sortIcon field="channel"></p-sortIcon></th>
                   <th pResizableColumn pSortableColumn="username">Autor <p-sortIcon field="username"></p-sortIcon></th>
                   <th pResizableColumn pSortableColumn="varname">Quote <p-sortIcon field="varname"></p-sortIcon></th>
@@ -31,6 +33,7 @@
           </ng-template>
           <ng-template pTemplate="body" let-variable>
               <tr >
+                <td>{{variable.id_quote}}</td>
                 <td>{{variable.channel}}</td>
                 <td>{{variable.author}}</td>
                 <td>{{variable.quote}}</td>

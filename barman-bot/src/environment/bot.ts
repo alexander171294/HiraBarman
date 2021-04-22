@@ -1,6 +1,6 @@
 export const botCFG = {
 	// "channels": ["#harkolandia", "#caballeros"],
-	"channels": process.env.BOT_CHANNELS ? : process.env.BOT_CHANNELS.split(',') [
+	"channels": process.env.BOT_CHANNELS ? process.env.BOT_CHANNELS.split(',') : [
 		"#LaTaberna"
 	],
 	"server": process.env.BOT_SERVER ? process.env.BOT_SERVER : 'irc.hirana.net',
